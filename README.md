@@ -9,3 +9,14 @@ Official repository for CVPR2021: UAV-Human: A Large Benchmark for Human Behavio
 
 ## Dataset
 Under construction, will be available soon!
+
+## Citation
+
+```bibtex
+@inproceedings{li2021uav,
+  title={UAV-Human: A Large Benchmark for Human Behavior Understanding with Unmanned Aerial Vehicles},
+  author={Li, Tianjiao and Liu, Jun and Zhang, Wei and Ni, Yun and Wang, Wenqian and Li, Zhiheng},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  year={2021}
+}
+```
