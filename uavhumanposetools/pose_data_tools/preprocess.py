@@ -1,13 +1,32 @@
+"""
+Utility script containing pre-processing logic.
+Main call is pre_normalization: 
+    Pads empty frames, 
+    Centers human, 
+    Align joints to axes.
+"""
+
 import math
-import sys
 
 import numpy as np
 from tqdm import tqdm
 
-sys.path.extend(['../'])
 
+def pre_normalization(data, center_joint=1, zaxis=[11, 5], xaxis=[]):
+    """
+    Normalization steps:
+        1) Pad empty frames with last frame
+        2) Center the human at origin
+        3) Rotate human to align specified joints to z-axis: ntu [0,1], uav [11,5]
+        4) Rotate human to align specified joints to x-axis: ntu [8,4], uav []
+    
+    Args:
+        data: tensor with skeleton data of shape N x C x T x V x M
+        center_joint: body joint index indicating center of body
+        zaxis: list containing 0 or 2 body joint indices (0 skips the alignment)
+        xaxis: list containing 0 or 2 body joint indices (0 skips the alignment)
+    """
 
-def pre_normalization(data, zaxis=[0, 1], xaxis=[8, 4]):
     N, C, T, V, M = data.shape
     s = np.transpose(data, [0, 4, 2, 3, 1])  # N, C, T, V, M  to  N, M, T, V, C
 
@@ -36,49 +55,39 @@ def pre_normalization(data, zaxis=[0, 1], xaxis=[8, 4]):
     for i_s, skeleton in enumerate(tqdm(s)):
         if skeleton.sum() == 0:
             continue
-        main_body_center = skeleton[0][:, 1:2, :].copy()
+        main_body_center = skeleton[0][:, center_joint:center_joint+1, :].copy()
         for i_p, person in enumerate(skeleton):
             if person.sum() == 0:
                 continue
             mask = (person.sum(-1) != 0).reshape(T, V, 1)
             s[i_s, i_p] = (s[i_s, i_p] - main_body_center) * mask
 
-    print('parallel the bone between hip(jpt 0) and spine(jpt 1) of the first person to the z axis')
-    for i_s, skeleton in enumerate(tqdm(s)):
-        if skeleton.sum() == 0:
-            continue
-        joint_bottom = skeleton[0, 0, zaxis[0]]
-        joint_top = skeleton[0, 0, zaxis[1]]
-        axis = np.cross(joint_top - joint_bottom, [0, 0, 1])
-        angle = angle_between(joint_top - joint_bottom, [0, 0, 1])
-        matrix_z = rotation_matrix(axis, angle)
-        for i_p, person in enumerate(skeleton):
-            if person.sum() == 0:
+    def align_human_to_vector(joint_idx1: int, joint_idx2: int, target_vector: list):
+        for i_s, skeleton in enumerate(tqdm(s)):
+            if skeleton.sum() == 0:
                 continue
-            for i_f, frame in enumerate(person):
-                if frame.sum() == 0:
+            joint1 = skeleton[0, 0, joint_idx1]
+            joint2 = skeleton[0, 0, joint_idx2]
+            axis = np.cross(joint2 - joint1, target_vector)
+            angle = angle_between(joint2 - joint1, target_vector)
+            matrix = rotation_matrix(axis, angle)
+            for i_p, person in enumerate(skeleton):
+                if person.sum() == 0:
                     continue
-                for i_j, joint in enumerate(frame):
-                    s[i_s, i_p, i_f, i_j] = np.dot(matrix_z, joint)
+                for i_f, frame in enumerate(person):
+                    if frame.sum() == 0:
+                        continue
+                    for i_j, joint in enumerate(frame):
+                        s[i_s, i_p, i_f, i_j] = np.dot(matrix, joint)
 
-    print(
-        'parallel the bone between right shoulder(jpt 8) and left shoulder(jpt 4) of the first person to the x axis')
-    for i_s, skeleton in enumerate(tqdm(s)):
-        if skeleton.sum() == 0:
-            continue
-        joint_rshoulder = skeleton[0, 0, xaxis[0]]
-        joint_lshoulder = skeleton[0, 0, xaxis[1]]
-        axis = np.cross(joint_rshoulder - joint_lshoulder, [1, 0, 0])
-        angle = angle_between(joint_rshoulder - joint_lshoulder, [1, 0, 0])
-        matrix_x = rotation_matrix(axis, angle)
-        for i_p, person in enumerate(skeleton):
-            if person.sum() == 0:
-                continue
-            for i_f, frame in enumerate(person):
-                if frame.sum() == 0:
-                    continue
-                for i_j, joint in enumerate(frame):
-                    s[i_s, i_p, i_f, i_j] = np.dot(matrix_x, joint)
+    if zaxis:
+        print('parallel the bone between hip(jpt %s)' %zaxis[0] + \
+            'and spine(jpt %s) of the first person to the z axis' %zaxis[1])
+        align_human_to_vector(zaxis[0], zaxis[1], [0, 0, 1])
+    if xaxis:
+        print('parallel the bone between right shoulder(jpt %s)' %xaxis[0] + \
+            'and left shoulder(jpt %s) of the first person to the x axis' %xaxis[1])
+        align_human_to_vector(xaxis[0], xaxis[1], [1, 0, 0])
 
     data = np.transpose(s, [0, 4, 2, 3, 1])
     return data
@@ -143,6 +152,6 @@ def z_rotation(vector, theta):
 
 
 if __name__ == '__main__':
-    data = np.load('../data/ntu/xview/val_data.npy')
+    data = np.load('../nturgb+d_skeletons_processed/testing_data.npy')
     pre_normalization(data)
-    np.save('../data/ntu/xview/data_val_pre.npy', data)
+    np.save('../nturgb+d_skeletons_processed/testing_data_prenormalized.npy', data)

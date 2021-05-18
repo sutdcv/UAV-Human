@@ -4,13 +4,14 @@ Loads skeleton data from preprocessed files, each instance contains
     (index: int
      skeleton-tensor: torch.Tensor (shape B x C x V x T x M), 
      label: int)
+
+Normalisation seems to cause an issue currently.
 """
 
 import os
 import pickle
 
 import numpy as np
-import torch
 from torch.utils.data import DataLoader, Dataset
 
 from pose_data_tools import tools
@@ -87,12 +88,11 @@ class UavhumanPose(Dataset):
         return self
 
     def __getitem__(self, index):
-        data_numpy = self.data[index]
-        label = self.label[index]
-        data_numpy = np.array(data_numpy)
+        data_numpy = np.array(self.data[index])
 
         if self.normalization:
             data_numpy = (data_numpy - self.mean_map) / self.std_map
+            data_numpy = np.nan_to_num(data_numpy)
         if self.random_shift:
             data_numpy = tools.random_shift(data_numpy)
         if self.random_choose:
@@ -102,7 +102,7 @@ class UavhumanPose(Dataset):
         if self.random_move:
             data_numpy = tools.random_move(data_numpy)
 
-        return index, data_numpy, label
+        return self.sample_name[index], data_numpy, self.label[index]
 
     def top_k(self, score, top_k):
         rank = score.argsort()
@@ -111,9 +111,13 @@ class UavhumanPose(Dataset):
 
 
 if __name__ == "__main__":
+    
+    import torch
+    from pose_data_tools.visualise import visualise
+    from pose_data_tools.graph import Graph
 
-    dataset = UavhumanPose(data_path='../nturgb+d_skeletons_processed/training_data.npy', 
-                           label_path='../nturgb+d_skeletons_processed/training_label.pkl',
+    dataset = UavhumanPose(data_path='../nturgb+d_skeletons_processed/testing_data.npy', 
+                           label_path='../nturgb+d_skeletons_processed/testing_label.pkl',
                            random_choose=False, 
                            random_shift=False, 
                            random_move=False,
@@ -122,8 +126,10 @@ if __name__ == "__main__":
                            debug=False, 
                            use_mmap=True)
     dataloader = DataLoader(dataset, batch_size=1)
-    for cnt, (index, images, labels) in enumerate(dataloader):
-        assert(index.shape == torch.Size([1]))
-        assert(images.shape == torch.Size([1, 3, 601, 25, 2]))
+    for cnt, (filename, images, labels) in enumerate(dataloader):
+        assert(len(filename) == 1)
+        assert(isinstance(filename[0], str))
+        assert(images.shape == torch.Size([1, 3, 601, 17, 2])), filename
         assert(labels.shape == torch.Size([1]))
+    visualise(images, graph=Graph(), is_3d=True)
     print("Dataloader test complete.")
