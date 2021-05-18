@@ -8,14 +8,7 @@ Official repository for CVPR2021: UAV-Human: A Large Benchmark for Human Behavio
 [ResearchGate](https://www.researchgate.net/publication/350558689_UAV-Human_A_Large_Benchmark_for_Human_Behavior_Understanding_with_Unmanned_Aerial_Vehicles)
 
 ## Dataset
-
-### Quick setup
-1) Edit `download.sh`, specify path to store dataset
-2) Run `download.sh`
-You are ready to go!
-
-See sample dataloaders in respective challenge folders to get working quick!
-Simple visualisation tools are also available.
+Under construction, will be available soon!
 
 ## Citation
 
