@@ -1,3 +1,9 @@
+"""
+Script to process raw data and generate dataset's binary files:
+    - .npy skeleton data files: np.array of shape B x C x V x T x M
+    - .pkl label files: (filename: str, label: list[int])
+"""
+
 import argparse
 import pickle
 import os
@@ -12,7 +18,7 @@ from pose_data_tools.preprocess import pre_normalization
 
 MAX_BODY_TRUE = 2
 MAX_BODY_KINECT = 4
-NUM_JOINT = 25
+NUM_JOINT = 17
 MAX_FRAME = 601
 
 SPLIT_NAME_MAP = {
