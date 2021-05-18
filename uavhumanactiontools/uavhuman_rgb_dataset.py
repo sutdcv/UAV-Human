@@ -25,7 +25,7 @@ from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
 
 
-class Uavhuman(Dataset):
+class UavhumanRgb(Dataset):
 
     def __init__(self, 
                  root: str, 
@@ -121,12 +121,16 @@ class Uavhuman(Dataset):
 if __name__ == "__main__":
 
     train_transforms = transforms.Compose([
+        transforms.CenterCrop((224, 224)),
         transforms.Normalize([0.5], [0.5])
     ])
-    dataset = Uavhuman(root='../UAVHuman/nightvision',
-                       num_frames=64,
-                       transforms=train_transforms)
+    dataset = UavhumanRgb(root='../UAVHuman/nightvision',
+                          num_frames=64,
+                          transforms=train_transforms)
     dataloader = DataLoader(dataset, batch_size=1)
     for cnt, (filename, images, labels) in enumerate(dataloader):
-        import ipdb; ipdb.set_trace()
-    import ipdb; ipdb.set_trace()
+        assert(isinstance(filename[0], str))
+        assert(len(filename) == 1)
+        assert(images.shape == torch.Size([1, 3, 64, 224, 224]))
+        assert(labels.shape == torch.Size([1]))
+    print("Dataloader test complete")
