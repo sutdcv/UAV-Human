@@ -8,18 +8,18 @@ import re
 import numpy as np
 from tqdm import tqdm
 
-from preprocess import pre_normalization
+from pose_data_tools.preprocess import pre_normalization
 
-max_body_true = 2
-max_body_kinect = 4
-num_joint = 25
-max_frame = 601
+MAX_BODY_TRUE = 2
+MAX_BODY_KINECT = 4
+NUM_JOINT = 25
+MAX_FRAME = 601
 
-split_name_conversion = {
+SPLIT_NAME_MAP = {
     'training': 'train_fns',
     'testing': 'test_fns'
 }
-filename_regex = r'P\d+S\d+G\d+B\d+H\d+UC\d+LC\d+A(\d+)R\d+_\d+'
+FILENAME_REGEX = r'P\d+S\d+G\d+B\d+H\d+UC\d+LC\d+A(\d+)R\d+_\d+'
 
 
 def read_skeleton_filter(file):
@@ -86,7 +86,7 @@ def read_xyz(file, max_body, num_joint):
 
     # select two max energy body
     energy = np.array([get_nonzero_std(x) for x in data])
-    index = energy.argsort()[::-1][0:max_body_true]
+    index = energy.argsort()[::-1][0:MAX_BODY_TRUE]
     data = data[index]
 
     data = data.transpose(3, 1, 2, 0)
@@ -108,7 +108,7 @@ def gendata(data_path,
     with open(split_file, 'r') as f:
         split_file = json.load(f)
     
-    skeleton_filenames = sorted(split_file[split_name_conversion[split]])
+    skeleton_filenames = sorted(split_file[SPLIT_NAME_MAP[split]])
     skeleton_filenames = [os.path.basename(filename)[:-8]+'.txt' for filename in skeleton_filenames]
     
     sample_name = []
@@ -124,28 +124,20 @@ def gendata(data_path,
         
         sample_name.append(filename)
         
-        label = int(re.match(filename_regex, basename).groups()[0])
+        label = int(re.match(FILENAME_REGEX, basename).groups()[0])
         sample_label.append(label)
 
     with open('{}/{}_label.pkl'.format(out_path, split), 'wb') as f:
         pickle.dump((sample_name, list(sample_label)), f)
 
-    fp = np.zeros((len(sample_label), 3, max_frame, num_joint, max_body_true), dtype=np.float32)
-    max_data_c1 = 0
-    max_sample_name = ''
+    fp = np.zeros((len(sample_label), 3, MAX_FRAME, NUM_JOINT, MAX_BODY_TRUE), dtype=np.float32)
 
     for i, s in enumerate(tqdm(sample_name)):
-        data = read_xyz(os.path.join(data_path, s), max_body=max_body_kinect, num_joint=num_joint)
+        data = read_xyz(os.path.join(data_path, s), max_body=MAX_BODY_KINECT, num_joint=NUM_JOINT)
         fp[i, :, 0:data.shape[1], :, :] = data
-        if data.shape[1] > max_data_c1:
-            max_data_c1 = data.shape[1]
-            max_sample_name = s
 
     fp = pre_normalization(fp)
-    np.save('{}/{}_data_joint.npy'.format(out_path, split), fp)
-
-    import ipdb
-    ipdb.set_trace()
+    np.save('{}/{}_data.npy'.format(out_path, split), fp)
 
 
 if __name__ == '__main__':
