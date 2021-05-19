@@ -1,5 +1,5 @@
 """
-Dataloader for UAVHuman dataset
+Dataloader for UAVHuman pose dataset
 Loads skeleton data from preprocessed files, each instance contains
     (index: int
      skeleton-tensor: torch.Tensor (shape B x C x V x T x M), 

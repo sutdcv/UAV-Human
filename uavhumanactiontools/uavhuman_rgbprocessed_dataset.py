@@ -1,6 +1,6 @@
 """
 Dataloader for UAVHuman rgb dataset
-Loads video files into RGB data, each instance contains
+Loads RGB data from preprocessed files, each instance contains
     (video-file-name: str, 
      image-tensor: torch.Tensor (shape B x C x N x H x W), 
      label: int)
@@ -9,11 +9,6 @@ Alternatively, labels can be in the form for binary classification:
     (video-file-name: str, 
      image-tensor: torch.Tensor (shape B x C x N x H x W), 
      label: torch.Tensor (shape B x classes x N))
-
-Note:
-    Runtime for single worker is same as loading using image on average.
-    However, loading of one video instance is not done by more than one worker.
-    Preprocess into images and use the other loader if more workers is available.
 """
 
 import re
@@ -23,7 +18,7 @@ import glob
 import random
 
 import numpy as np
-import cv2
+from PIL import Image
 
 import torch
 from torch.utils.data import DataLoader, Dataset
@@ -53,7 +48,8 @@ class UavhumanRgb(Dataset):
 
     def get_videos(self, binary_labels: bool = False) -> list(tuple((str, np.array))):
         """
-        Obtain video names and corresponding label in directory recursively.
+        Obtain video names and corresponding label in data directory.
+        Expects video folders to be of depth=2.
         
         Args:
             binary_labels: set true if require binary labels (Batch x Classes x Frames)
@@ -62,13 +58,11 @@ class UavhumanRgb(Dataset):
             List containing Tuples, each with filename and corresponding label
         """
         dataset = []
-        vids = [f for f in glob.glob(os.path.join(self.root, "*"), recursive=True) 
-            if f.endswith('avi')]
+        vids = [f for f in glob.glob(os.path.join(self.root, "**/**")) 
+            if os.path.isdir(f)]
         
         for filename in vids:
             basename = os.path.basename(filename)
-            if not os.path.exists(filename):
-                raise ValueError('%s does not exist!' %filename)
             
             ann = int(re.match(self.filename_regex, basename).groups()[0])
             if binary_labels:
@@ -76,7 +70,7 @@ class UavhumanRgb(Dataset):
                 label[ann, :] = 1
             else:
                 label = ann
-            dataset.append((basename, label))
+            dataset.append((filename, label))
         
         print("Found %s video examples" %(len(vids)))
 
@@ -84,40 +78,37 @@ class UavhumanRgb(Dataset):
     
     def load_frames_from_video(self, video_path: str) -> np.array:
         """
-        Load sequence of images from video, starting at a random point.
+        Load sequence of images from folder, starting at a random point.
 
         Args:
-            video_path: path to avi file
+            video_path: path to folder of frames
         
         Returns:
             RGB images, transformed (T x H x W x C)
         """
 
-        capture = cv2.VideoCapture(video_path)
-        frames = capture.get(cv2.CAP_PROP_FRAME_COUNT)
+        filenames = [f for f in glob.glob(os.path.join(video_path, '*.png'))]
+        frames = len(filenames)
         
         # random start location
         start_frame = random.randint(0, frames - self.num_frames - 1) # both bounds inclusive
-        for i in range(start_frame):
-            _, _ = capture.read()
-
-        frames = []
-        for _ in range(self.num_frames):
-            ret, frame = capture.read()
-            frame = frame[:, :, [2, 1, 0]]
-            frame = transforms.ToTensor()(frame)
+        
+        data_array = []
+        for i in range(start_frame, start_frame + 64):
+            image = Image.open(filenames[i]).convert('RGB')
             if self.transforms is not None:
-                frame = self.transforms(frame)
-            frames.append(frame)
+                image = self.transforms(image)
+            else:
+                image = transforms.ToTensor()(image)
+            data_array.append(image)
 
-        return torch.stack(frames, dim=1)
+        return torch.stack(data_array, dim=1)
 
     def __getitem__(self, index):
-        vid, label = self.videos[index]
-        video_path = os.path.join(self.root, vid)
+        video_path, label = self.videos[index]
         imgs = self.load_frames_from_video(video_path)
         
-        return vid, imgs, label
+        return video_path, imgs, label
 
     def __len__(self):
         return len(self.videos)
@@ -126,12 +117,13 @@ class UavhumanRgb(Dataset):
 if __name__ == "__main__":
 
     train_transforms = transforms.Compose([
+        transforms.ToTensor(),
         transforms.Normalize([0.5], [0.5])
     ])
-    dataset = UavhumanRgb(root='../UAVHuman/nightvision',
+    dataset = UavhumanRgb(root='../UAVHuman_processed/',
                           num_frames=64,
                           transforms=train_transforms)
-    dataloader = DataLoader(dataset, batch_size=1, num_workers=1)
+    dataloader = DataLoader(dataset, batch_size=1, num_workers=4)
     for cnt, (filename, images, labels) in enumerate(dataloader):
         assert(isinstance(filename[0], str))
         assert(len(filename) == 1)
