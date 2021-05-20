@@ -8,10 +8,12 @@ import re
 import argparse
 
 import cv2
+from torchvision import transforms
 
 
-def gendata(data_path,
-            out_path):
+def gendata(data_path: str,
+            out_path: str,
+            transforms: transforms.Compose = None):
 
     vids = [f for f in glob.glob(os.path.join(data_path, "**"), recursive=True) 
         if f.endswith('avi')]
@@ -35,12 +37,22 @@ def gendata(data_path,
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
 
+            if transforms is not None:
+                frame = transforms(frame)
+                frame = frame.permute(1, 2, 0).numpy()
+
             cv2.imwrite(save_path, frame)
             frame_no += 1
             ret, frame = capture.read()
 
 
 if __name__ == '__main__':
+
+    preprocess_transforms = None
+    # preprocess_transforms = transforms.Compose([
+    #     transforms.ToTensor(),
+    #     transforms.CenterCrop((224, 224))
+    # ])
 
     parser = argparse.ArgumentParser(description='UAVHuman Data Converter.')
     parser.add_argument('--data_path', default='../UAVHuman')
@@ -51,4 +63,5 @@ if __name__ == '__main__':
         os.makedirs(arg.out_folder)
     
     gendata(data_path=arg.data_path,
-            out_path=arg.out_folder)
+            out_path=arg.out_folder,
+            transforms=preprocess_transforms)
