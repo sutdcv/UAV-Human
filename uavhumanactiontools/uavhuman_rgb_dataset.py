@@ -43,10 +43,6 @@ class UavhumanRgb(Dataset):
         self.transforms = transforms
         self.num_classes = num_classes
 
-        self.split_name_conversion = {
-            'training': 'train_fns',
-            'testing': 'test_fns'
-        }
         self.filename_regex = r'P\d+S\d+G\d+B\d+H\d+UC\d+LC\d+A(\d+)R\d+_\d+'
 
         self.videos = self.get_videos()

@@ -113,11 +113,18 @@ class UavhumanPose(Dataset):
 if __name__ == "__main__":
     
     import torch
+    import argparse
+
     from pose_data_tools.visualise import visualise
     from pose_data_tools.graph import Graph
+    from tqdm import tqdm
 
-    dataset = UavhumanPose(data_path='../nturgb+d_skeletons_processed/testing_data.npy', 
-                           label_path='../nturgb+d_skeletons_processed/testing_label.pkl',
+    parser = argparse.ArgumentParser(description='UAVHuman Data Converter.')
+    parser.add_argument('--data_path', required=True)
+    args = parser.parse_args()
+
+    dataset = UavhumanPose(data_path=os.path.join(args.data_path, 'train_data.npy'), 
+                           label_path=os.path.join(args.data_path, 'train_label.pkl'),
                            random_choose=False, 
                            random_shift=False, 
                            random_move=False,
@@ -126,7 +133,7 @@ if __name__ == "__main__":
                            debug=False, 
                            use_mmap=True)
     dataloader = DataLoader(dataset, batch_size=1)
-    for cnt, (filename, images, labels) in enumerate(dataloader):
+    for cnt, (filename, images, labels) in enumerate(tqdm(dataloader)):
         assert(len(filename) == 1)
         assert(isinstance(filename[0], str))
         assert(images.shape == torch.Size([1, 3, 601, 17, 2])), filename

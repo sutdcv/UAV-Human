@@ -7,8 +7,7 @@ Script to process raw data and generate dataset's binary files:
 import argparse
 import pickle
 import os
-import sys
-import json
+import glob
 import re
 
 import numpy as np
@@ -21,10 +20,6 @@ MAX_BODY_KINECT = 4
 NUM_JOINT = 17
 MAX_FRAME = 601
 
-SPLIT_NAME_MAP = {
-    'training': 'train_fns',
-    'testing': 'test_fns'
-}
 FILENAME_REGEX = r'P\d+S\d+G\d+B\d+H\d+UC\d+LC\d+A(\d+)R\d+_\d+'
 
 
@@ -100,71 +95,46 @@ def read_xyz(file, max_body, num_joint):
 
 
 def gendata(data_path,
-            out_path,
-            split,
-            split_file,
-            ignored_sample_path=None):
+            split):
     
-    if ignored_sample_path is not None:
-        with open(ignored_sample_path, 'r') as f:
-            ignored_samples = [line.strip() + '.skeleton' for line in f.readlines()]
-    else:
-        ignored_samples = []
-    
-    with open(split_file, 'r') as f:
-        split_file = json.load(f)
-    
-    skeleton_filenames = sorted(split_file[SPLIT_NAME_MAP[split]])
-    skeleton_filenames = [os.path.basename(filename)[:-8]+'.txt' for filename in skeleton_filenames]
+    out_path = data_path
+    data_path = os.path.join(data_path, split)
+
+    skeleton_filenames = [os.path.basename(f) for f in 
+        glob.glob(os.path.join(data_path, "**.txt"), recursive=True)]
     
     sample_name = []
-    sample_label = []
-    
     for basename in skeleton_filenames:
         filename = os.path.join(data_path, basename)
-        if filename in ignored_samples:
-            continue
         if not os.path.exists(filename):
-            print('%s does not exist!' %filename)
-            continue
-        
+            raise OSError('%s does not exist!' %filename)
         sample_name.append(filename)
-        
-        label = int(re.match(FILENAME_REGEX, basename).groups()[0])
-        sample_label.append(label)
 
-    with open('{}/{}_label.pkl'.format(out_path, split), 'wb') as f:
-        pickle.dump((sample_name, list(sample_label)), f)
-
-    fp = np.zeros((len(sample_label), 3, MAX_FRAME, NUM_JOINT, MAX_BODY_TRUE), dtype=np.float32)
-
+    data = np.zeros((len(sample_name), 3, MAX_FRAME, NUM_JOINT, MAX_BODY_TRUE), dtype=np.float32)
     for i, s in enumerate(tqdm(sample_name)):
-        data = read_xyz(os.path.join(data_path, s), max_body=MAX_BODY_KINECT, num_joint=NUM_JOINT)
-        fp[i, :, 0:data.shape[1], :, :] = data
+        sample = read_xyz(s, max_body=MAX_BODY_KINECT, num_joint=NUM_JOINT)
+        data[i, :, 0:sample.shape[1], :, :] = sample
+    data = pre_normalization(data)
 
-    fp = pre_normalization(fp)
-    np.save('{}/{}_data.npy'.format(out_path, split), fp)
+    np.save('{}/{}_data.npy'.format(out_path, split), data)
+
+    if split != 'test':
+        sample_label = []
+        for basename in skeleton_filenames:
+            label = int(re.match(FILENAME_REGEX, basename).groups()[0])
+            sample_label.append(label)
+
+        with open('{}/{}_label.pkl'.format(out_path, split), 'wb') as f:
+            pickle.dump((sample_name, list(sample_label)), f)
 
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='UAVHuman Data Converter.')
-    parser.add_argument('--data_path', default='../nturgb+d_skeletons')
-    parser.add_argument('--ignored_sample_path', default=None)
-    parser.add_argument('--out_folder', default='../nturgb+d_skeletons_processed')
-    parser.add_argument('--train_test_split', default='D:/Downloads/train_test_split.json')
-    arg = parser.parse_args()
-
-    if not os.path.exists(arg.out_folder):
-        os.makedirs(arg.out_folder)
+    parser.add_argument('--data_path', required=True)
+    args = parser.parse_args()
     
-    gendata(data_path=arg.data_path,
-            out_path=arg.out_folder,
-            split='training',
-            split_file=arg.train_test_split,
-            ignored_sample_path=arg.ignored_sample_path)
-    gendata(data_path=arg.data_path,
-            out_path=arg.out_folder,
-            split='testing',
-            split_file=arg.train_test_split,
-            ignored_sample_path=arg.ignored_sample_path)
+    gendata(data_path=args.data_path,
+            split='train')
+    gendata(data_path=args.data_path,
+            split='test')
