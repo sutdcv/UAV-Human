@@ -16,13 +16,11 @@ from .bases import BaseImageDataset
 
 
 class UAVHuman(BaseImageDataset):
-
-    dataset_dir = 'uavhuman'
     
     def __init__(self, root='./data', 
             verbose=True, **kwargs):
         super(UAVHuman, self).__init__()
-        self.dataset_dir = osp.join(root, self.dataset_dir)
+        self.dataset_dir = root
         self.train_dir = osp.join(self.dataset_dir, 'bounding_box_train')
         
         """Comment for Competition Splits
