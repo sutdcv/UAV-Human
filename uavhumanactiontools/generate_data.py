@@ -14,16 +14,14 @@ from torchvision import transforms
 
 
 def extract_frames(filename: str, 
-                   data_path: str, 
-                   out_path: str, 
+                   save_dir: str, 
                    transforms: transforms.Compose = None) -> None:
     """
     Extract frames given path to video. 
 
     Args:
         filename: path to video
-        data_path: path to data root directory
-        out_path: path to output root directory
+        save_dir: path to frame output directory
         transforms: torchvision transformations
     """
 
@@ -37,9 +35,7 @@ def extract_frames(filename: str,
     frame_no = 0
 
     while ret:
-        save_path = os.path.splitext(filename.replace(data_path, out_path))[0]
-        save_path = os.path.join(save_path, '%s.png' %frame_no)
-        save_dir = os.path.dirname(save_path)
+        save_path = os.path.join(save_dir, '%s.png' %frame_no)
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
@@ -57,12 +53,17 @@ def gendata(data_path: str,
             num_workers: int,
             transforms: transforms.Compose = None):
 
-    vids = [f for f in glob.glob(os.path.join(data_path, "**"), recursive=True) 
-        if f.endswith('avi')]
-
+    vids = [f.replace('\\', '/') for f in 
+        glob.glob(os.path.join(data_path, '**/*.avi'), recursive=True)]
     print('Total of %s videos found.' %(len(vids)))
+
+    def get_save_dir(vid_filename):
+        video_base_path = vid_filename.split(data_path)[1]
+        return os.path.join(out_path, video_base_path)
+    save_dirs = [get_save_dir(f) for f in vids]
+
     Pool(num_workers).starmap(
-        extract_frames, zip(vids, repeat(data_path), repeat(out_path), repeat(transforms)))
+        extract_frames, zip(vids, save_dirs, repeat(transforms)))
 
 
 if __name__ == '__main__':
@@ -74,15 +75,15 @@ if __name__ == '__main__':
     # ])
 
     parser = argparse.ArgumentParser(description='UAVHuman Data Converter.')
-    parser.add_argument('--data_path', default='../UAVHuman')
-    parser.add_argument('--out_folder', default='../UAVHuman_processed')
+    parser.add_argument('--data_path', required=True)
+    parser.add_argument('--out_folder', required=True)
     parser.add_argument('--num_workers', default=4)
-    arg = parser.parse_args()
+    args = parser.parse_args()
 
-    if not os.path.exists(arg.out_folder):
-        os.makedirs(arg.out_folder)
+    if not os.path.exists(args.out_folder):
+        os.makedirs(args.out_folder)
 
-    gendata(data_path=arg.data_path,
-            out_path=arg.out_folder,
+    gendata(data_path=args.data_path,
+            out_path=args.out_folder,
             transforms=preprocess_transforms,
-            num_workers=arg.num_workers)
+            num_workers=args.num_workers)

@@ -12,7 +12,6 @@ Alternatively, labels can be in the form for binary classification:
 """
 
 import re
-import json
 import os
 import glob
 import random
@@ -21,7 +20,7 @@ import numpy as np
 from PIL import Image
 
 import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 from torchvision import transforms
 
 
@@ -58,7 +57,7 @@ class UavhumanRgb(Dataset):
             List containing Tuples, each with filename and corresponding label
         """
         dataset = []
-        vids = [f for f in glob.glob(os.path.join(self.root, "**/**")) 
+        vids = [f for f in glob.glob(os.path.join(self.root, "*.avi"), recursive=True) 
             if os.path.isdir(f)]
         
         for filename in vids:
@@ -116,20 +115,28 @@ class UavhumanRgb(Dataset):
 
 if __name__ == "__main__":
 
+    import argparse
+    from tqdm import tqdm
+    from torch.utils.data import DataLoader
+    from torchvision.utils import save_image
+
+    parser = argparse.ArgumentParser(description='UAVHuman Action Data Loader.')
+    parser.add_argument('--data_path', required=True)
+    args = parser.parse_args()
+
     train_transforms = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize([0.5], [0.5])
     ])
-    dataset = UavhumanRgb(root='../UAVHuman_processed/',
+    dataset = UavhumanRgb(root=os.path.join(args.data_path, 'train'),
                           num_frames=64,
                           transforms=train_transforms)
     dataloader = DataLoader(dataset, batch_size=1, num_workers=4)
-    for cnt, (filename, images, labels) in enumerate(dataloader):
+    for cnt, (filename, images, labels) in enumerate(tqdm(dataloader)):
         assert(isinstance(filename[0], str))
         assert(len(filename) == 1)
         assert(images.shape == torch.Size([1, 3, 64, 480, 640]))
         assert(labels.shape == torch.Size([1]))
     
-    from torchvision.utils import save_image
-    save_image(images[:, :, 0, :, :], '../uavhuman_rgb_sample.png')
+    save_image(images[:, :, 0, :, :], 'uavhuman_rgb_sample.png')
     print("Dataloader test complete")
