@@ -4,3 +4,4 @@ nturgb+d_skeletons/*
 nturgb+d_skeletons_processed/*
 *.pyc
 .vscode/*
+**/download.sh
