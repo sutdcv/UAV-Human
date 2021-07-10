@@ -119,7 +119,7 @@ if __name__ == "__main__":
     from pose_data_tools.graph import Graph
     from tqdm import tqdm
 
-    parser = argparse.ArgumentParser(description='UAVHuman Data Converter.')
+    parser = argparse.ArgumentParser(description='UAVHuman Pose Data Loader.')
     parser.add_argument('--data_path', required=True)
     args = parser.parse_args()
 
