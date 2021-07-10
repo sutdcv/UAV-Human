@@ -26,9 +26,9 @@ Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/
 
 VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_**09131758**.avi
 
-**P**070: Person ID for the main subject
+<!-- **P**070: Person ID for the main subject
 
-**S**01:
+**S**01: -->
 
 <!-- SkeletonFileNames: -->
 <!-- **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_09131758.txt -->
