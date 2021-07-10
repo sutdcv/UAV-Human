@@ -18,7 +18,7 @@ from pose_data_tools.preprocess import pre_normalization
 MAX_BODY_TRUE = 2
 MAX_BODY_KINECT = 4
 NUM_JOINT = 17
-MAX_FRAME = 601
+MAX_FRAME = 300
 
 FILENAME_REGEX = r'P\d+S\d+G\d+B\d+H\d+UC\d+LC\d+A(\d+)R\d+_\d+'
 

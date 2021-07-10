@@ -136,7 +136,7 @@ if __name__ == "__main__":
     for cnt, (filename, images, labels) in enumerate(tqdm(dataloader)):
         assert(len(filename) == 1)
         assert(isinstance(filename[0], str))
-        assert(images.shape == torch.Size([1, 3, 601, 17, 2])), filename
+        assert(images.shape == torch.Size([1, 3, 300, 17, 2])), filename
         assert(labels.shape == torch.Size([1]))
     visualise(images, graph=Graph(), is_3d=True)
     print("Dataloader test complete.")
