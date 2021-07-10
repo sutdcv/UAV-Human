@@ -11,6 +11,15 @@
 [ResearchGate](https://www.researchgate.net/publication/350558689_UAV-Human_A_Large_Benchmark_for_Human_Behavior_Understanding_with_Unmanned_Aerial_Vehicles)
 
 ## Dataset
+**Term of Use**
+
+Please note that our UAVHuman is released **ONLY** for academic research only, and are free to researchers from educational or research institutes for non-commercial purposes.
+
+1. Any of the following actions will be considered illegal: redistribution, derivation or generation of a new dataset from this dataset, and commercial usage of any of these datasets in any way or form, either partially or in its entirety.
+2. Please note that we have obtained consents from all captured subjects. And in terms of privacy, videos of all the captured subjects are only allowed for the demonstration in academic publications and presentations.
+
+**Download Link**
+
 Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/tianjiao_li_mymail_sutd_edu_sg/EtLLkN49_C9Bq14ur0ZLpHkB-bi9Tc_LlIQBv0Ds4JE49A?e=IqX67X)
 
 ## Annotations
