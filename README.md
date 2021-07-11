@@ -22,13 +22,57 @@ Please note that our UAVHuman is released **ONLY** for academic research only, a
 
 Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/tianjiao_li_mymail_sutd_edu_sg/EtLLkN49_C9Bq14ur0ZLpHkB-bi9Tc_LlIQBv0Ds4JE49A?e=IqX67X)
 
+<!-- **FAQs:**
+
+**Q1:** Is my competition result in MMVRAC comparable with the results reported in your original paper?
+
+**A1:** No. During our ICCVW2021 MMVRAC competition, only part of the testing data is released, and therefore the result obtained in the MMVRAC competition is **NOT** comparable with the results reported in our paper. If you try to publish an academic paper on our benchmark, please follow the above [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/tianjiao_li_mymail_sutd_edu_sg/EtLLkN49_C9Bq14ur0ZLpHkB-bi9Tc_LlIQBv0Ds4JE49A?e=IqX67X) and download the whole released dataset.
+
+**Q2:** Which identity should I use to train my ReID model, the person ID or the setup ID?
+
+**A2:** In our original paper, we combined the person IDs and subject IDs as the identities to train our model. However, we provide person ID and setup ID to give more choices for you to train and evaluate your own models.
+
+**Q3:** In your ReID dataset, is it the case that you combined the subject ids with the setup ids to obtain 1,144 identities?
+
+**A3:** Yes. In order to publish our ReID dataset to the public, we have to obtain the consent forms from all the captured subjects, and then we are allowed to distribute the videos containing the captured subjects to the community. -->
+
 ## Annotations
 
 VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_**09131758**.avi
 
-<!-- **P**070: Person ID for the main subject
+**P**070: (**P**ersonID) unique person ID for the main subject in current video
 
-**S**01: -->
+**S**01: (**S**etupID) setup id that indicates changing of clothing, hat, backpack of the main subject
+
+**G**10: (**G**ender) first bit is main subject's gender, second bit is auxiliary subject's gender
+
+``0: n/a; 1: male; 2: female``
+
+**B**00: (**B**ackpack) first bit is main subject's backpack color, second bit is auxiliary subject's backpack color
+
+``0: n/a; 1: red; 2: black; 3: green; 4: yellow``
+
+**H**10: (**H**at) first bit is main subject's hat color, second bit is auxiliary subject's hat color
+
+``0: n/a; 1: red; 2: black; 3: green; 4: white``
+
+**UC**102000: (**U**pper**C**lothing) first three bits are main subject's upper clothing color and style, last three bits are auxiliary subject's upper clothing color and style
+
+``color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink``
+
+``style: 0: n/a; 1: long; 2: short; 3: skirt``
+
+**LC**102000: (**L**ower**C**lothing) first three bits are main subject's lower clothing color and style, last three bits are auxiliary subject's lower clothing color and style
+
+``color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink``
+
+``style: 0: n/a; 1: long; 2: short; 3: skirt``
+
+**A**031: (**A**ction) action labels of current sample
+
+**R**00: (**R**eplicate) replicate capturing
+
+09131758: capturing timestamp, month/day/hour/minute
 
 <!-- SkeletonFileNames: -->
 <!-- **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_09131758.txt -->
@@ -37,7 +81,7 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 <!-- **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_09131758_117_bbox.jpg -->
 
 
-|Seg|Descriptions|Detailed Description
+<!-- |Seg|Descriptions|Detailed Description
 |:-:|:-:|:-:|
 |**P**070| Main Subject Person ID | Unique person ID for each subject |
 |**S**01| Main Subject Setup ID | Setup ID when main subject changes clothing/backpack/hat |
@@ -50,7 +94,7 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 |**R**0| Replicate | Replicate capturing |
 |09/13/17/58| Timestamp | Month/Day/Hour/Minute
 
-**Note: For Two-Persons Attr, number(s) before slash '/' represent the first person attribute and number(s) after slash '/' represent the second person attribute**
+**Note: For Two-Persons Attr, number(s) before slash '/' represent the first person attribute and number(s) after slash '/' represent the second person attribute** -->
 
 
 
