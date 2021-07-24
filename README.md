@@ -6,21 +6,11 @@
 
 ## Paper
 
-[arXiv](https://arxiv.org/abs/2104.00946)
+[[CVF OpenAccess](https://openaccess.thecvf.com/content/CVPR2021/papers/Li_UAV-Human_A_Large_Benchmark_for_Human_Behavior_Understanding_With_Unmanned_CVPR_2021_paper.pdf)] [[arXiv](https://arxiv.org/abs/2104.00946)] [[ResearchGate](https://www.researchgate.net/publication/350558689_UAV-Human_A_Large_Benchmark_for_Human_Behavior_Understanding_with_Unmanned_Aerial_Vehicles)]
 
-[ResearchGate](https://www.researchgate.net/publication/350558689_UAV-Human_A_Large_Benchmark_for_Human_Behavior_Understanding_with_Unmanned_Aerial_Vehicles)
+## Dataset Download
 
-## Dataset
-**Term of Use**
-
-Please note that our UAVHuman is released **ONLY** for academic research only, and are free to researchers from educational or research institutes for non-commercial purposes.
-
-1. Any of the following actions will be considered illegal: redistribution, derivation or generation of a new dataset from this dataset, and commercial usage of any of these datasets in any way or form, either partially or in its entirety.
-2. Please note that we have obtained consents from all captured subjects. And in terms of privacy, videos of all the captured subjects are only allowed for the demonstration in academic publications and presentations.
-
-**Download Link**
-
-Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/tianjiao_li_mymail_sutd_edu_sg/EtLLkN49_C9Bq14ur0ZLpHkB-bi9Tc_LlIQBv0Ds4JE49A?e=IqX67X)
+The dataset is available for [Download](https://sutdcv.github.io/UAV-Human) now!
 
 <!-- **FAQs:**
 
@@ -38,7 +28,7 @@ Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/
 
 ## Annotations
 
-VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_**09131758**.avi
+VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0\_**09131758**.avi
 
 **P**070: (**P**ersonID) unique person ID for the main subject in current video
 
@@ -46,27 +36,27 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 
 **G**10: (**G**ender) first bit is main subject's gender, second bit is auxiliary subject's gender
 
-``0: n/a; 1: male; 2: female``
+`0: n/a; 1: male; 2: female`
 
 **B**00: (**B**ackpack) first bit is main subject's backpack color, second bit is auxiliary subject's backpack color
 
-``0: n/a; 1: red; 2: black; 3: green; 4: yellow``
+`0: n/a; 1: red; 2: black; 3: green; 4: yellow`
 
 **H**10: (**H**at) first bit is main subject's hat color, second bit is auxiliary subject's hat color
 
-``0: n/a; 1: red; 2: black; 3: green; 4: white``
+`0: n/a; 1: red; 2: black; 3: green; 4: white`
 
 **UC**102000: (**U**pper**C**lothing) first three bits are main subject's upper clothing color and style, last three bits are auxiliary subject's upper clothing color and style
 
-``color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink``
+`color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink`
 
-``style: 0: n/a; 1: long; 2: short; 3: skirt``
+`style: 0: n/a; 1: long; 2: short; 3: skirt`
 
 **LC**102000: (**L**ower**C**lothing) first three bits are main subject's lower clothing color and style, last three bits are auxiliary subject's lower clothing color and style
 
-``color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink``
+`color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink`
 
-``style: 0: n/a; 1: long; 2: short; 3: skirt``
+`style: 0: n/a; 1: long; 2: short; 3: skirt`
 
 **A**031: (**A**ction) action labels of current sample
 
@@ -79,7 +69,6 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 
 <!-- ImageFileNames: -->
 <!-- **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_09131758_117_bbox.jpg -->
-
 
 <!-- |Seg|Descriptions|Detailed Description
 |:-:|:-:|:-:|
@@ -96,19 +85,19 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 
 **Note: For Two-Persons Attr, number(s) before slash '/' represent the first person attribute and number(s) after slash '/' represent the second person attribute** -->
 
-
-
 ## Citation
 
 ```bibtex
-@inproceedings{li2021uav,
-  title={UAV-Human: A Large Benchmark for Human Behavior Understanding with Unmanned Aerial Vehicles},
-  author={Li, Tianjiao and Liu, Jun and Zhang, Wei and Ni, Yun and Wang, Wenqian and Li, Zhiheng},
-  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
-  year={2021}
+@InProceedings{Li_2021_CVPR,
+    author    = {Li, Tianjiao and Liu, Jun and Zhang, Wei and Ni, Yun and Wang, Wenqian and Li, Zhiheng},
+    title     = {UAV-Human: A Large Benchmark for Human Behavior Understanding With Unmanned Aerial Vehicles},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2021},
+    pages     = {16266-16275}
 }
 ```
 
 ## Contact
 
-tianjiao_li [at] mymail.sutd.edu.sg
+`tianjiao_li [at] mymail.sutd.edu.sg`
