@@ -32,27 +32,27 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 
 **P**070: (**P**ersonID) unique person ID for the main subject in current video
 
-**S**01: (**S**etupID) setup id that indicates changing of clothing, hat, backpack of the main subject
+**S**01: (**S**etupID) setup id that indicates changes of clothing, hat, backpack of the main subject
 
-**G**10: (**G**ender) first bit is main subject's gender, second bit is auxiliary subject's gender
+**G**10: (**G**ender) first bit represents main subject's gender, second bit represents auxiliary subject's gender
 
 `0: n/a; 1: male; 2: female`
 
-**B**00: (**B**ackpack) first bit is main subject's backpack color, second bit is auxiliary subject's backpack color
+**B**00: (**B**ackpack) first bit represents main subject's backpack color, second bit represents auxiliary subject's backpack color
 
 `0: n/a; 1: red; 2: black; 3: green; 4: yellow`
 
-**H**10: (**H**at) first bit is main subject's hat color, second bit is auxiliary subject's hat color
+**H**10: (**H**at) first bit represents main subject's hat color, second bit represents auxiliary subject's hat color
 
 `0: n/a; 1: red; 2: black; 3: green; 4: white`
 
-**UC**102000: (**U**pper**C**lothing) first three bits are main subject's upper clothing color and style, last three bits are auxiliary subject's upper clothing color and style
+**UC**102000: (**U**pper**C**lothing) first three bits represent main subject's upper clothing color (2 bits) and style (1 bit), last three bits represent auxiliary subject's upper clothing color (2 bits) and style (1 bit)
 
 `color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink`
 
 `style: 0: n/a; 1: long; 2: short; 3: skirt`
 
-**LC**102000: (**L**ower**C**lothing) first three bits are main subject's lower clothing color and style, last three bits are auxiliary subject's lower clothing color and style
+**LC**102000: (**L**ower**C**lothing) first three bits are main subject's lower clothing color (2 bits) and style (1 bit), last three bits are auxiliary subject's lower clothing color (2 bits) and style (1 bit)
 
 `color: 0: n/a; 1: red; 2: black; 3: blue; 4: green; 5: multicolor; 6: grey; 7: white; 8: yellow; 9: dark brown; 10: purple; 11: pink`
 
@@ -62,7 +62,7 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 
 **R**00: (**R**eplicate) replicate capturing
 
-09131758: capturing timestamp, month/day/hour/minute
+09131758: capturing timestamp, month(2 bits)/day(2 bits)/hour(2 bits)/minute(2 bits)
 
 <!-- SkeletonFileNames: -->
 <!-- **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031**R**0_09131758.txt -->
@@ -84,6 +84,36 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 |09/13/17/58| Timestamp | Month/Day/Hour/Minute
 
 **Note: For Two-Persons Attr, number(s) before slash '/' represent the first person attribute and number(s) after slash '/' represent the second person attribute** -->
+
+## Action Recognition Evaluation Protocols
+
+### Cross-Subject-v1
+In cross-subject-v1 evaluation, we split 119 subjects into training and testing groups, and the training and testing groups have 16,288 and samples 6188 samples respectively. The IDs of training subjects are 0, 2, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 59, 61, 62, 63, 64, 65, 67, 68, 69, 70, 71, 73, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 98, 100, 102, 103, 105, 106, 110, 111, 112, 114, 115, 116, 117, 118; the remaining subjects are for testing.
+
+### Cross-Subject-v2
+In cross-subject-v2 evaluation, we split 119 subjects into training and testing groups, and the training and testing groups have 16,184 and samples 6292 samples respectively. The IDs of training subjects are 0, 3, 4, 5, 6, 8, 10, 11, 12, 14, 16, 18, 19, 20, 21, 22, 24, 26, 29, 30, 31, 32, 35, 36, 37, 38, 39, 40, 43, 44, 45, 46, 47, 49, 52, 54, 56, 57, 59, 60, 61, 62, 63, 64, 66, 67, 69, 70, 71, 72, 73, 74, 75, 77, 78, 79, 80, 81, 83, 84, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 99, 100, 101, 102, 103, 104, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 117, 118; the remaining subjects are for testing.
+
+### Results
+#### Evaluation on I3D 
+| Modality        | CSv1 - Acc (%) | CSv2 - Acc (%) |
+| --------------- | -------------- | -------------- |
+| RGB Video       | 23.86          | 29.53          |
+| Fisheye Video   | 20.76          | 34.12          |
+
+#### Evaluation on skeleton
+| Methods         | CSv1 - Acc (%) | CSv2 - Acc (%) |
+| --------------- | -------------- | -------------- |
+| DGNN            | 29.90          | -              |
+| ST-GCN          | 30.25          | 56.14          |
+| 2s-AGCN         | 34.84          | 66.68          |
+| HARD-Net        | 36.97          | -              |
+| Shift-GCN       | 37.98          | 67.04          |
+| MS-G3D          | -              | 69.87          |
+
+## Video Processing Guidance
+Please refer to [utils/convert_videos_to_frames.py](utils/convert_videos_to_frames.py) and following:
+
+``python convert_videos_to_frames.py --videos path/to/all/videos --frames path/to/output/frames``
 
 ## Citation
 
