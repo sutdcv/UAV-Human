@@ -113,7 +113,7 @@ In cross-subject-v2 evaluation, we split 119 subjects into training and testing 
 | 2s-AGCN   | 34.84          | 66.68          |
 | HARD-Net  | 36.97          | -              |
 | Shift-GCN | 37.98          | 67.04          |
-| MS-G3D    | -              | 69.87          |
+<!-- MS-G3D | -              | 69.87          | -->|
 
 ## Video Processing Guidance
 
