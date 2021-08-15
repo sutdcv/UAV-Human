@@ -10,7 +10,11 @@
 
 ## Dataset Download
 
+<<<<<<< HEAD
 The dataset is available for [Download](https://sutdcv.github.io/UAV-Human) now!
+=======
+The dataset is available for [Download](https://sutdcv.github.io/uav-human-web/) now!
+>>>>>>> 89fc9c78078de0469d5fb1555bdd633759c27bc1
 
 <!-- **FAQs:**
 
@@ -88,32 +92,38 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 ## Action Recognition Evaluation Protocols
 
 ### Cross-Subject-v1
-In cross-subject-v1 evaluation, we split 119 subjects into training and testing groups, and the training and testing groups have 16,288 and samples 6188 samples respectively. The IDs of training subjects are 0, 2, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 59, 61, 62, 63, 64, 65, 67, 68, 69, 70, 71, 73, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 98, 100, 102, 103, 105, 106, 110, 111, 112, 114, 115, 116, 117, 118; the remaining subjects are for testing.
+
+In cross-subject-v1 evaluation, we split 119 subjects into training and testing groups. The IDs of training subjects are 0, 2, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 59, 61, 62, 63, 64, 65, 67, 68, 69, 70, 71, 73, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 98, 100, 102, 103, 105, 106, 110, 111, 112, 114, 115, 116, 117, 118; the remaining subjects are for testing.
 
 ### Cross-Subject-v2
-In cross-subject-v2 evaluation, we split 119 subjects into training and testing groups, and the training and testing groups have 16,184 and samples 6292 samples respectively. The IDs of training subjects are 0, 3, 4, 5, 6, 8, 10, 11, 12, 14, 16, 18, 19, 20, 21, 22, 24, 26, 29, 30, 31, 32, 35, 36, 37, 38, 39, 40, 43, 44, 45, 46, 47, 49, 52, 54, 56, 57, 59, 60, 61, 62, 63, 64, 66, 67, 69, 70, 71, 72, 73, 74, 75, 77, 78, 79, 80, 81, 83, 84, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 99, 100, 101, 102, 103, 104, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 117, 118; the remaining subjects are for testing.
+
+In cross-subject-v2 evaluation, we split 119 subjects into training and testing groups. The IDs of training subjects are 0, 3, 4, 5, 6, 8, 10, 11, 12, 14, 16, 18, 19, 20, 21, 22, 24, 26, 29, 30, 31, 32, 35, 36, 37, 38, 39, 40, 43, 44, 45, 46, 47, 49, 52, 54, 56, 57, 59, 60, 61, 62, 63, 64, 66, 67, 69, 70, 71, 72, 73, 74, 75, 77, 78, 79, 80, 81, 83, 84, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 99, 100, 101, 102, 103, 104, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 117, 118; the remaining subjects are for testing.
 
 ### Results
-#### Evaluation on I3D 
-| Modality        | CSv1 - Acc (%) | CSv2 - Acc (%) |
-| --------------- | -------------- | -------------- |
-| RGB Video       | 23.86          | 29.53          |
-| Fisheye Video   | 20.76          | 34.12          |
+
+#### Evaluation on I3D
+
+| Modality      | CSv1 - Acc (%) | CSv2 - Acc (%) |
+| ------------- | -------------- | -------------- |
+| RGB Video     | 23.86          | 29.53          |
+| Fisheye Video | 20.76          | 34.12          |
 
 #### Evaluation on skeleton
-| Methods         | CSv1 - Acc (%) | CSv2 - Acc (%) |
-| --------------- | -------------- | -------------- |
-| DGNN            | 29.90          | -              |
-| ST-GCN          | 30.25          | 56.14          |
-| 2s-AGCN         | 34.84          | 66.68          |
-| HARD-Net        | 36.97          | -              |
-| Shift-GCN       | 37.98          | 67.04          |
-| MS-G3D          | -              | 69.87          |
+
+| Methods   | CSv1 - Acc (%) | CSv2 - Acc (%) |
+| --------- | -------------- | -------------- |
+| DGNN      | 29.90          | -              |
+| ST-GCN    | 30.25          | 56.14          |
+| 2s-AGCN   | 34.84          | 66.68          |
+| HARD-Net  | 36.97          | -              |
+| Shift-GCN | 37.98          | 67.04          |
+<!-- MS-G3D | -              | 69.87          | -->
 
 ## Video Processing Guidance
+
 Please refer to [utils/convert_videos_to_frames.py](utils/convert_videos_to_frames.py) and following:
 
-``python convert_videos_to_frames.py --videos path/to/all/videos --frames path/to/output/frames``
+`python convert_videos_to_frames.py --videos path/to/all/videos --frames path/to/output/frames`
 
 ## Citation
 

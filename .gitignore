@@ -5,6 +5,7 @@ nturgb+d_skeletons_processed/*
 *.pyc
 .vscode/*
 **/download.sh
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -133,6 +134,8 @@ dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+=======
+>>>>>>> 89fc9c78078de0469d5fb1555bdd633759c27bc1
 
 # OS generated files 
 .DS_Store
