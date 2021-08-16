@@ -1,9 +1,6 @@
 # Toolkit for UAV-Human Action Recognition
 
-Extract the downloaded data into ``data`` folder or run:
-```
-sh download.sh /path/to/action_data_root
-```
+Extract the downloaded data into ``data`` folder.
 
 Expected directory in `/path/to/action_data_root`
 ```
