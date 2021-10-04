@@ -10,11 +10,7 @@
 
 ## Dataset Download
 
-<<<<<<< HEAD
-The dataset is available for [Download](https://sutdcv.github.io/UAV-Human) now!
-=======
 The dataset is available for [Download](https://sutdcv.github.io/uav-human-web/) now!
->>>>>>> 89fc9c78078de0469d5fb1555bdd633759c27bc1
 
 <!-- **FAQs:**
 
