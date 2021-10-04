@@ -1,6 +1,6 @@
 # UAV-Human
 
-**Official repository for CVPR2021: UAV-Human: A Large Benchmark for Human Behavior Understanding with Unmanned Aerial Vehicle**
+**Official repository for CVPR2021: UAV-Human: A Large Benchmark for Human Behavior Understanding with Unmanned Aerial Vehicles**
 
 ![](imgs/samples.png)
 

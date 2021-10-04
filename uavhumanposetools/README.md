@@ -1,9 +1,6 @@
 # Toolkit for UAV-Human Pose Estimation
 
-Extract the downloaded data into ``data`` folder or run:
-```
-sh download.sh /path/to/pose_data_root
-```
+Extract the downloaded data into ``data`` folder.
 
 Run the following script to preprocess the files:
 ```

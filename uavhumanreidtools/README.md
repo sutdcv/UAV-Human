@@ -1,9 +1,6 @@
 # Toolkit for UAV-Human Person Re-Identification
 
-Extract the downloaded data into ``data`` folder or run:
-```
-sh download.sh /path/to/reid_data_root
-```
+Extract the downloaded data into ``data`` folder.
 
 Run the reader script to obtain dataloader:
 ```
