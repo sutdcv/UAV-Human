@@ -113,6 +113,7 @@ def gendata(data_path,
     data = np.zeros((len(sample_name), 3, MAX_FRAME, NUM_JOINT, MAX_BODY_TRUE), dtype=np.float32)
     for i, s in enumerate(tqdm(sample_name)):
         sample = read_xyz(s, max_body=MAX_BODY_KINECT, num_joint=NUM_JOINT)
+        sample = sample[:, :MAX_FRAME, :, :]
         data[i, :, 0:sample.shape[1], :, :] = sample
     data = pre_normalization(data)
 
