@@ -22,7 +22,7 @@ Please note that our UAVHuman is released **ONLY** for academic research only, a
 
 Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/tianjiao_li_mymail_sutd_edu_sg/EtLLkN49_C9Bq14ur0ZLpHkB-bi9Tc_LlIQBv0Ds4JE49A?e=IqX67X)
 
-<!-- **FAQs:**
+**FAQs:**
 
 **Q1:** Is my competition result in MMVRAC comparable with the results reported in your original paper?
 
@@ -30,11 +30,19 @@ Dataset now available! [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/
 
 **Q2:** Which identity should I use to train my ReID model, the person ID or the setup ID?
 
-**A2:** In our original paper, we combined the person IDs and subject IDs as the identities to train our model. However, we provide person ID and setup ID to give more choices for you to train and evaluate your own models.
+**A2:** We have provided person IDs and setup IDs 
+
+In our original paper,
+
+we concatenated the person IDs and subject IDs as the identities to train our model. However, we provide person ID and setup ID to give more choices for you to train and evaluate your own models. 
+
+with the purpose of providing 2 research evaluation protocol - appearance id
+
+also note that we obtained consent forms from all captured subjects 
 
 **Q3:** In your ReID dataset, is it the case that you combined the subject ids with the setup ids to obtain 1,144 identities?
 
-**A3:** Yes. In order to publish our ReID dataset to the public, we have to obtain the consent forms from all the captured subjects, and then we are allowed to distribute the videos containing the captured subjects to the community. -->
+**A3:** Yes. In order to publish our ReID dataset to the public, we have to obtain the consent forms from all the captured subjects, and then we are allowed to distribute the videos containing the captured subjects to the community.
 
 ## Annotations
 
