@@ -209,11 +209,11 @@ VideoNames: **P**070**S**01**G**10**B**00**H**10**UC**102000**LC**092000**A**031
 
 **B**00: (**B**ackpack) first bit represents main subject's backpack color, second bit represents auxiliary subject's backpack color
 
-`0: n/a; 1: red; 2: black; 3: green; 4: yellow`
+`0: n/a; 1: red; 2: black; 3: green; 4: yellow; 5: n/a`
 
 **H**10: (**H**at) first bit represents main subject's hat color, second bit represents auxiliary subject's hat color
 
-`0: n/a; 1: red; 2: black; 3: green; 4: white`
+`0: n/a; 1: red; 2: black; 3: yellow; 4: white; 5: n/a`
 
 **UC**102000: (**U**pper**C**lothing) first three bits represent main subject's upper clothing color (2 bits) and style (1 bit), last three bits represent auxiliary subject's upper clothing color (2 bits) and style (1 bit)
 
