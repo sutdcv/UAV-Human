@@ -22,13 +22,11 @@ The dataset is available for [Download](https://sutdcv.github.io/uav-human-web/)
 
 **A2:** We have provided person IDs and setup IDs 
 
-In our original paper,
+In our original paper, we concatenated the person IDs and subject IDs as the identities to train our model. However, we provide person ID and setup ID to give more choices for you to train and evaluate your own models. 
 
-we concatenated the person IDs and subject IDs as the identities to train our model. However, we provide person ID and setup ID to give more choices for you to train and evaluate your own models. 
+<!-- with the purpose of providing 2 research evaluation protocol - appearance id -->
 
-with the purpose of providing 2 research evaluation protocol - appearance id
-
-also note that we obtained consent forms from all captured subjects 
+Also note that we obtained consent forms from all captured subjects. 
 
 **Q3:** In your ReID dataset, is it the case that you combined the subject ids with the setup ids to obtain 1,144 identities?
 
