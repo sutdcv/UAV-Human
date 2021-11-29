@@ -20,7 +20,7 @@ The dataset is available for [Download](https://sutdcv.github.io/uav-human-web/)
 
 **Q2:** Which identity should I use to train my ReID model, the person ID or the setup ID?
 
-**A2:** We have provided person IDs and setup IDs 
+**A2:** We have provided person IDs and setup IDs.
 
 In our original paper, we concatenated the person IDs and subject IDs as the identities to train our model. However, we provide person ID and setup ID to give more choices for you to train and evaluate your own models. 
 
