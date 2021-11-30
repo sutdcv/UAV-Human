@@ -16,7 +16,7 @@ The dataset is available for [Download](https://sutdcv.github.io/uav-human-web/)
 
 **Q1:** Is my competition result in MMVRAC comparable with the results reported in your original paper?
 
-**A1:** No. During our ICCVW2021 MMVRAC competition, only part of the testing data is released, and therefore the result obtained in the MMVRAC competition is **NOT** comparable with the results reported in our paper. If you try to publish an academic paper on our benchmark, please follow the above [link](https://sutdapac-my.sharepoint.com/:f:/g/personal/tianjiao_li_mymail_sutd_edu_sg/EtLLkN49_C9Bq14ur0ZLpHkB-bi9Tc_LlIQBv0Ds4JE49A?e=IqX67X) and download the whole released dataset.
+**A1:** No. During our ICCVW2021 MMVRAC competition, only part of the testing data is released, and therefore the result obtained in the MMVRAC competition is **NOT** comparable with the results reported in our paper. If you try to publish an academic paper on our benchmark, please follow the above [link](https://drive.google.com/drive/folders/1QeYXeM_pbWBSSmpRr_rKHurMpI2TxAKs?usp=sharing) and download the whole released dataset.
 
 **Q2:** Which identity should I use to train my ReID model, the person ID or the setup ID?
 
