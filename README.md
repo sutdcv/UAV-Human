@@ -34,7 +34,7 @@ Also note that we obtained consent forms from all captured subjects.
 
 ## Action Classes
 
-The UAV-Human dataset contains 155 action classes, and the action categories are list below:
+The UAV-Human dataset contains 155 action classes, and the action categories are listed below:
 
 * A000: drink
 * A001: eat snacks
