@@ -1,6 +1,20 @@
 # Toolkit for UAV-Human Pose Estimation
 
+This toolkit is intended to work with skeleton data denoted in .txt files in UAVHuman.
 Extract the downloaded data into ``data`` folder.
+
+Expected directory in `/path/to/pose_data_root`
+```
+└───[pose_data_root]
+    ├───train
+        ├───P000S00G10B10H10UC022000LC021000A000R0_08241716.txt
+        ├───P000S00G10B10H10UC022000LC021000A001R0_08241716.txt
+        └───...
+    ├───test
+        ├───0000.txt
+        ├───0001.txt
+        └───...
+```
 
 Run the following script to preprocess the files:
 ```

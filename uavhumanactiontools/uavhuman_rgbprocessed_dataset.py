@@ -135,7 +135,7 @@ if __name__ == "__main__":
     for cnt, (filename, images, labels) in enumerate(tqdm(dataloader)):
         assert(isinstance(filename[0], str))
         assert(len(filename) == 1)
-        assert(images.shape == torch.Size([1, 3, 64, 480, 640]))
+        assert(images.shape == torch.Size([1, 3, 64, 1080, 1920]))
         assert(labels.shape == torch.Size([1]))
     
     save_image(images[:, :, 0, :, :], 'uavhuman_rgb_sample.png')

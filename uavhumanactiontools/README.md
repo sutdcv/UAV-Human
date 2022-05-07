@@ -1,5 +1,6 @@
 # Toolkit for UAV-Human Action Recognition
 
+This toolkit is intended to work with video data denoted in .avi files in UAVHuman.
 Extract the downloaded data into ``data`` folder.
 
 Expected directory in `/path/to/action_data_root`
